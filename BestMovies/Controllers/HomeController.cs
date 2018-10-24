@@ -15,14 +15,14 @@ namespace BestMovies.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Customers()
         {
-            ViewData["Message"] = "Your application description page.";
+            IEnumerable<string> customers = new List<string> {"John Smith", "Marry Williams" };
 
-            return View();
+            return View(customers);
         }
 
-        public IActionResult Contact()
+        public IActionResult Movies()
         {
             ViewData["Message"] = "Your contact page.";
 
