@@ -3,24 +3,40 @@
     ViewData["Title"] = "Movies";
 }
 <h2>@ViewData["Title"]</h2>
-
+<a class="btn btn-primary" asp-controller="Movie" asp-action="Create">New Movie</a><hr>
 <table class="table">
+    @if (!Model.Any())
+    {
+        <tr>We don't have any movies yet</tr>
+    }
+    else
+    { 
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(Model => Model[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(Model => Model[0].Genre)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
     
-    <tbody>
-        @if (Model == null || Model.Count == 0)
+        @foreach (var item in Model)
         {
-            <tr>We don't have any customers yet</tr>
-        }
-        else
-        {
-            foreach (var item in Model)
-            {
             <tr>
                 <td>
                     <a asp-area="" asp-controller="Movie" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.Name)
+                </td>
             </tr>
-            }
         }
-    </tbody>
+    
+        </tbody>
+    }
 </table>

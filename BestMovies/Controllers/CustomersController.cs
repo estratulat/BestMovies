@@ -4,18 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using BestMovies.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BestMovies.Controllers
 {
     public class CustomersController : Controller
     {
-        IList<Customer> customers = new List<Customer> { new Customer(1, "John Smith"), new Customer(2, "Marry Williams") };
+        private readonly BestMoviesBDContext _context;
+        public CustomersController(BestMoviesBDContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            return View(customers);
+            return View(_context.Customers.Include(c => c.MembershipType).ToList());
         }
         public IActionResult Details(int id)
         {
+            var customers = _context.Customers.ToList();
             if (customers.Count >= id && id!=0)
                 return View(customers[id-1]);
             else

@@ -5,22 +5,38 @@
 <h2>@ViewData["Title"]</h2>
 
 <table class="table">
+    @if (!Model.Any())
+    {
+        <tr>We don't have any customers yet</tr>
+    }
+    else
+    { 
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(Model => Model[0].FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].MembershipType)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+
+        <tbody>
     
-    <tbody>
-        @if (Model == null || Model.Count == 0)
+        @foreach (var item in Model)
         {
-            <tr>We don't have any customers yet</tr>
+        <tr>
+            <td>
+                <a asp-area="" asp-controller="Customers" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MembershipType.Name)
+            </td>
+        </tr>
         }
-        else
-        {
-            foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    <a asp-area="" asp-controller="Customers" asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</a>
-                </td>
-            </tr>
-            }
-        }
-    </tbody>
+    
+        </tbody>
+    }
 </table>
