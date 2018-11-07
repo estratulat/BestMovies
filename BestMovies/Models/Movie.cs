@@ -9,7 +9,7 @@ namespace BestMovies.Models
         public string Title { get; set; }
 
         public int GenreId { get; set; }
-        [Range(1, 20)]
+        [Range(1, 20, ErrorMessage = "Value must be between 1 and 20")]
         public int InStock { get; set; }
 
         public Genre Genre { get; set; }
