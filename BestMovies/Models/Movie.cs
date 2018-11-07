@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BestMovies.Models
 {
@@ -11,13 +7,15 @@ namespace BestMovies.Models
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
-        [Required]
+
         public int GenreId { get; set; }
+        [Range(1, 20)]
+        public int InStock { get; set; }
 
         public Genre Genre { get; set; }
         public Movie()
         {
-            
+
         }
         public Movie(int id, string title)
         {

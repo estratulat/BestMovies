@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BestMovies.Models;
+﻿using BestMovies.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BestMovies.Controllers
 {
+    [AutoValidateAntiforgeryToken]
     public class MovieController : Controller
     {
         private readonly BestMoviesBDContext _context;
@@ -36,8 +34,8 @@ namespace BestMovies.Controllers
         public IActionResult Create()
         {
             var genreQuery = from g in _context.Genres
-                orderby g.Name
-                select g;
+                             orderby g.Name
+                             select g;
             ViewBag.Genres = new SelectList(genreQuery.AsNoTracking(), "Id", "Name");
             return View();
 
@@ -57,14 +55,14 @@ namespace BestMovies.Controllers
                 return NotFound();
             }
             var genreQuery = from g in _context.Genres
-                orderby g.Name
-                select g;
+                             orderby g.Name
+                             select g;
             ViewBag.Genres = new SelectList(genreQuery.AsNoTracking(), "Id", "Name");
             return View(movie);
 
         }
         [HttpPost, ActionName("Edit")]
-        public IActionResult EditPost([Bind("Title,GenreId,Id")]Movie movie)
+        public IActionResult EditPost([Bind("Title,GenreId,Id,InStock")]Movie movie)
         {
             if (movie == null)
             {
@@ -90,7 +88,7 @@ namespace BestMovies.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
-        public IActionResult Create( [Bind("Title,GenreId")]Movie movie)
+        public IActionResult Create([Bind("Title,GenreId,InStock")]Movie movie)
         {
             try
             {
